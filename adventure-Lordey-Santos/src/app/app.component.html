@@ -1,0 +1,149 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<!--Le bandeau du haut de la page-->
+<div class="container-fluid" class="general">
+  <div class="text-center">
+    <span id="worldname"> {{world.name}}</span>
+    <br>
+    <img [attr.src]="world?.logo ? server+world.logo : '' " class="image" />
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <input type="text" [(ngModel)]="username" (change)="onUsernameChanged(username)" />
+    </div>
+
+    <div class="col-md-4">
+      <div class="text-center">
+        <span [innerHTML]="world.money | bigvalue"> </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-default" type="button" (click)=changeBouton() id="buyBouton">Buy x{{qtmulti}}</button>
+    </div>
+  </div>
+  <toaster-container> </toaster-container>
+</div>
+
+
+
+
+<!--les produits et boutons-->
+<div class="row">
+  <div class="col-md-2">
+    <div classe="list-group">
+      <div class="btn-group">
+        <button class="buttonleft btn btn-primary btn-lg" data-toggle="modal" (click)="unlocksModal.show()">
+          <span>Unlocks</span>
+        </button>
+      </div>
+      <div>
+        <button class="buttonleft btn btn-primary btn-lg" type="button">Cash Upgrades</button>
+      </div>
+      <div>
+        <button class="buttonleft btn btn-primary btn-lg" type="button"> Angel Upgrades</button>
+      </div>
+      <div>
+        <button class="buttonleft btn btn-primary btn-lg" data-toggle="modal" (click)="managersModal.show()">
+          <span *ngIf="badgeManager==true" class="badge">New</span>Managers </button>
+      </div>
+      <div>
+        <button class="buttonleft btn btn-primary btn-lg" type="button"> Investors </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Produit 1 -->
+  <div class="row">
+    <div class="col-11">
+      <app-product [monde]="world" [prod]="world.products.product[0]" [qtmulti]="qtmulti" class="product col-md-6"
+        (notifyProduction)="onProductionDone($event)" (notifyAchat)="onBuy($event)"></app-product>
+      <!-- Produit 2 -->
+      <app-product [monde]="world" [prod]="world.products.product[1]" [qtmulti]="qtmulti" class="product col-md-6"
+        (notifyProduction)="onProductionDone($event)" (notifyAchat)="onBuy($event)"></app-product>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-11">
+      <!-- Produit 3 -->
+      <app-product [monde]="world" [prod]="world.products.product[2]" [qtmulti]="qtmulti" class="product col-md-6"
+        (notifyProduction)="onProductionDone($event)" (notifyAchat)="onBuy($event)"></app-product>
+
+      <!-- Produit 4 -->
+      <app-product [monde]="world" [prod]="world.products.product[3]" [qtmulti]="qtmulti" class="product col-md-6"
+        (notifyProduction)="onProductionDone($event)" (notifyAchat)="onBuy($event)"></app-product>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-11">
+      <!-- Produit 5 -->
+      <app-product [monde]="world" [prod]="world.products.product[4]" [qtmulti]="qtmulti" class="product col-md-6"
+        (notifyProduction)="onProductionDone($event)" (notifyAchat)="onBuy($event)"></app-product>
+      <!-- Produit 6 -->
+      <app-product [monde]="world" [prod]="world.products.product[5]" [qtmulti]="qtmulti" class="product col-md-6"
+        (notifyProduction)="onProductionDone($event)" (notifyAchat)="onBuy($event)"></app-product>
+    </div>
+  </div>
+</div>
+
+
+<!-- Prise en charge des unlocks ! -->
+<app-modal #unlocksModal>
+  <div class="app-modal-header">
+    <h1 class="modal-title">
+      Unlocks!
+    </h1>
+  </div>
+  <div class="app-modal-body">
+    <div *ngFor="let unlocks of world.allunlocks.pallier">
+      <div *ngIf="unlocks.unlocked==false">
+        <div class="row">
+          <div class="col-md-3">
+            <img [attr.src]="server+unlocks.logo" class="images_manager" (click)=calculUnlocks() />
+          </div>
+          <div class="unlocks">
+            <h5>{{unlocks.name}}</h5>
+            <h6>{{world.products.product[(unlocks.idcible)].name}}</h6>
+            <h6>Seuil de produits: {{unlocks.seuil}}</h6>
+            <h6>{{unlocks.typeratio}} x {{unlocks.ratio}}</h6>
+            <br/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-default" (click)="unlocksModal.hide()">Close</button>
+  </div>
+</app-modal>
+
+<!-- contenu d’une fenêtre de type modal (superposée)-->
+<app-modal #managersModal>
+  <div class="app-modal-header">
+    <h4 class="modal-title">Que puis-je faire pour vous ? </h4>
+  </div>
+  <div class="app-modal-body">
+    <div *ngFor="let manager of world.managers.pallier">
+      <!--  a completer pour réaliser le rendu d’une ligne de manager-->
+      <div *ngIf="manager.unlocked==false">
+        <div class="row">
+          <div class="col-md-3">
+            <img [attr.src]="server+manager.logo" class="images_manager" />
+          </div>
+          <div class="col-md-5">
+            <h2>{{manager.name}}</h2>
+            Cout : {{manager.seuil}}<br>
+          </div>
+          <div class="col-md-3">
+            <button type="button" class="btn btn-default" (click)="manager_hire(manager)">Embaucher
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-default" (click)="managersModal.hide()">Close</button>
+  </div>
+</app-modal>

@@ -1,0 +1,31 @@
+<div class="row" id="modele">
+  <div class="card border-left-primary shadow h-100 py-2">
+    <div class="card-body">
+      <div class="row no-gutters align-items-center">
+        <div class="col mr-2">
+          <div class="row">
+            <div class="lesdeux">
+              <div class="premier">
+                <img [attr.src]="product?.logo ? server+product.logo : '' " class="image" (click)="startFabrication()" id="image_produit" />
+              </div>
+            </div>
+            <div class="deuxieme">
+              <span id="quantite"> {{product?.quantite}} </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <div class="progress" #bar> </div>
+          <br>
+          <span id="revenu">Revenu: {{product?.revenu}} </span>
+          <br>
+          <span id="cout">Cout: {{product?.cout}} </span>
+          <br>
+          <span id="vitesse">Vitesse: {{product?.vitesse}} </span>
+          <div>
+          <button class="btn btn-default" type="button"(click)=acheter()> Buy x{{quantiteBouton}} </button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

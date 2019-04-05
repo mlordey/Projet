@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/mlordey/Downloads/adventureISIServer/adventureISIServer/src/main/resources/XMLmonde.xsd" uri="src/main/resources/jaxb/BindingAdventure/XMLmonde.xsd"/>
+</catalog>
